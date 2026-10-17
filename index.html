@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070a11">
+  <meta name="description" content="MysteryBox: The Hollow Manor — a first-person 3D mystery adventure.">
+  <title>MysteryBox: The Hollow Manor</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="./game.js"></script>
+</head>
+<body>
+  <main id="gameRoot" class="game-root">
+    <canvas id="gameCanvas" aria-label="Interactive 3D haunted mansion scene"></canvas>
+    <div class="vignette"></div>
+    <header class="top-hud">
+      <div class="wordmark"><span>MYSTERY<span class="gold">BOX</span></span><small>THE HOLLOW MANOR</small></div>
+      <div class="top-right">
+        <span class="chapter-pill"><i></i><span id="chapterLabel">LOCATION 01 · THE FOYER</span></span>
+        <button id="languageButton" class="hud-button" type="button">മലയാളം</button>
+        <button id="menuButton" class="round-button" type="button" aria-label="Open menu">☰</button>
+      </div>
+    </header>
+
+    <aside class="left-hud glass-panel">
+      <div class="panel-eyebrow" data-i18n="objective">CURRENT OBJECTIVE</div>
+      <p id="objectiveText">Find the code that unlocks the front door.</p>
+      <div class="thin-rule"></div>
+      <div class="panel-row"><span data-i18n="progress">CASE PROGRESS</span><b id="progressLabel">0%</b></div>
+      <div class="progress-track"><div id="progressFill"></div></div>
+      <div class="panel-eyebrow evidence-title" data-i18n="evidence">EVIDENCE</div>
+      <div id="evidenceList" class="evidence-list"><p class="muted" data-i18n="noEvidence">No evidence found yet.</p></div>
+    </aside>
+
+    <div class="center-reticle" aria-hidden="true"><span></span></div>
+    <div id="targetLabel" class="target-label hidden">Inspect object</div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <section class="bottom-hud">
+      <div class="movement-hint"><span class="keycap">DRAG</span><span data-i18n="lookHint">Look around</span><span class="dot-sep">•</span><span class="keycap">TAP</span><span data-i18n="inspectHint">Inspect</span></div>
+      <div id="inventory" class="inventory glass-panel">
+        <div class="inventory-heading" data-i18n="inventory">INVENTORY</div>
+        <div id="inventoryItems" class="inventory-items"><span class="inventory-empty" data-i18n="emptyInventory">No items collected</span></div>
+      </div>
+      <div class="bottom-actions">
+        <button id="hintButton" class="action-button" type="button"><span class="action-icon">✧</span><span data-i18n="hint">HINT</span></button>
+        <button id="roomsButton" class="action-button" type="button"><span class="action-icon">⌂</span><span data-i18n="rooms">ROOMS</span></button>
+      </div>
+    </section>
+
+    <div id="crosshairPrompt" class="crosshair-prompt hidden">TAP TO INSPECT</div>
+  </main>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden">
+    <section class="modal glass-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="closeModal" class="close-button" type="button" aria-label="Close">×</button>
+      <div id="modalEyebrow" class="panel-eyebrow">OBJECT INSPECTION</div>
+      <h1 id="modalTitle">A mysterious object</h1>
+      <p id="modalDescription" class="modal-description"></p>
+      <div id="modalVisual" class="modal-visual hidden"></div>
+      <form id="answerForm" class="answer-form hidden">
+        <label id="answerLabel" for="answerInput">Enter answer</label>
+        <div class="answer-row"><input id="answerInput" autocomplete="off" spellcheck="false"><button type="submit" class="primary-button" data-i18n="submit">SUBMIT</button></div>
+      </form>
+      <div id="modalFeedback" class="modal-feedback" role="status"></div>
+      <div id="modalActions" class="modal-actions"></div>
+    </section>
+  </div>
+
+  <div id="roomBackdrop" class="modal-backdrop hidden">
+    <section class="modal room-modal glass-panel" role="dialog" aria-modal="true" aria-labelledby="roomMenuTitle">
+      <button id="closeRooms" class="close-button" type="button" aria-label="Close">×</button>
+      <div class="panel-eyebrow">HOLLOW MANOR · FLOOR PLAN</div>
+      <h1 id="roomMenuTitle" data-i18n="rooms">Rooms</h1>
+      <div id="roomChoices" class="room-choices"></div>
+      <button id="resetButton" class="text-button" type="button" data-i18n="reset">Restart case</button>
+    </section>
+  </div>
+  <div id="startOverlay" class="start-overlay">
+    <div class="start-card glass-panel">
+      <div class="start-symbol">M<span>✦</span></div>
+      <div class="panel-eyebrow">A FIRST-PERSON MYSTERY</div>
+      <h1>MYSTERY<span>BOX</span></h1>
+      <h2 data-i18n="subtitle">THE HOLLOW MANOR</h2>
+      <p data-i18n="intro">A storm has trapped you inside a forgotten mansion. Search the rooms, inspect objects, and uncover the secret of its missing caretaker.</p>
+      <button id="startButton" class="primary-button start-button" type="button" data-i18n="enter">ENTER THE MANOR <span>↗</span></button>
+      <small data-i18n="controls">Touch: drag to look · tap a glowing object to inspect</small>
+      <small class="warning-note">3D scene loads from Three.js CDN · internet required</small>
+    </div>
+  </div>
+  <noscript>This game requires JavaScript and a browser with WebGL support.</noscript>
+</body>
+</html>
