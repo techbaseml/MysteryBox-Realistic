@@ -1,1 +1,1 @@
-Add optimized .glb/.gltf object models and PBR textures here for future realism upgrades.
+Add optimized room scene textures and reference renders here. This starter builds rooms procedurally in Three.js.
